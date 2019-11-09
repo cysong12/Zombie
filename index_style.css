@@ -1,0 +1,126 @@
+body {
+    background-color: black;
+}
+.main {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+#menu {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+#start_button {
+    display: block;
+    background-color: limegreen;
+    font-size: 50px;
+    color: slategrey;
+    border-style: solid;
+    border-color: black;
+    border-width: 5px;
+    border-radius: 5px;
+}
+#exit_button {
+    display: block;
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+#score {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+}
+#score_value {
+    position: absolute;
+    top: 0%;
+    left: 54%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+}
+#wall_hp {
+    position: absolute;
+    display: block;
+    font-size: 18px;
+    bottom: 90%;
+    left: 10%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+#wall1 {
+    position: absolute;
+    display: block;
+    height: 150px;
+    width: auto;
+    bottom: 0%;
+    left: 10%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+#wall2 {
+    position: absolute;
+    display: block;
+    height: 150px;
+    width: auto;
+    bottom: 25%;
+    left: 10%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+#wall3 {
+    position: absolute;
+    display: block;
+    height: 150px;
+    width: auto;
+    bottom: 50%;
+    left: 10%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.zombie {
+    position: absolute;
+    display: block;
+    height: 100px;
+    width: auto;
+    right: -10%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#flying_zombie1 {
+    position: absolute;
+    display: block;
+    height: 100px;
+    width: auto;
+    bottom: 50%;
+    right: 0%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+#game_over {
+    position: relative;
+    top: 100%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+}

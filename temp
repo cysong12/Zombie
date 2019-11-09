@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zombie Hunter</title>
+    <link rel="stylesheet" type="text/css" href="index_style.css">
+</head>
+<body>
+    <div class="main">
+        <div id="game_frame">
+        </div>
+        <div id="menu">
+        </div>
+        <div id="game_play">
+        </div>
+
+    </div>
+<script>
+    function createElements() {
+        let game_background = document.createElement("img");
+        game_background.setAttribute('id', 'game_background');
+        game_background.setAttribute("src", "desert_background.jpg");
+        document.getElementById("game_frame").appendChild(game_background);
+
+        let start_button = document.createElement('BUTTON');
+        start_button.setAttribute('id', 'start_button');
+        document.getElementById('menu').appendChild(start_button);
+        document.getElementById('start_button').innerHTML = "Start Game";
+        document.getElementById('start_button').onclick = function() {
+            startGame();
+            document.getElementById('start_button').remove();
+        }
+
+        let level_p = document.createElement('p');
+        level_p.setAttribute('id', 'level');
+        document.getElementById('game_play').appendChild(level_p);
+        document.getElementById('level').innerHTML = "Level: 1";
+
+        let score_p = document.createElement('p');
+        score_p.setAttribute('id', 'score');
+        document.getElementById('game_play').appendChild(score_p);
+        document.getElementById('score').innerHTML = "Score: ";
+
+        let score_value_p = document.createElement('p');
+        score_value_p.setAttribute('id', 'score_value');
+        document.getElementById('game_play').appendChild(score_value_p);
+        document.getElementById('score_value').innerHTML = '0';
+
+        let wall_hp_p = document.createElement('p');
+        wall_hp_p.setAttribute('id', 'wall_hp');
+        document.getElementById('game_play').appendChild(wall_hp_p);
+        document.getElementById('wall_hp').innerHTML = "Wall HP: 1";
+
+        let wall1 = document.createElement('img');
+        wall1.setAttribute('id', 'wall1');
+        wall1.setAttribute('src', 'wall.png');
+        document.getElementById('game_play').appendChild(wall1);
+
+        let wall2 = document.createElement('img');
+        wall2.setAttribute('id', 'wall2');
+        wall2.setAttribute('src', 'wall.png');
+        document.getElementById('game_play').appendChild(wall2);
+
+        let wall3 = document.createElement('img');
+        wall3.setAttribute('id', 'wall3');
+        wall3.setAttribute('src', 'wall.png');
+        document.getElementById('game_play').appendChild(wall3);
+
+        let explosion = document.createElement('img');
+        explosion.setAttribute('id', 'explosion');
+        document.getElementById('game_play').appendChild(explosion);
+
+        let exit_button = document.createElement('BUTTON');
+        exit_button.setAttribute('id', 'exit_button');
+        document.getElementById('game_play').appendChild(exit_button);
+        document.getElementById('exit_button').innerHTML = "Exit Game";
+
+        let game_over_p = document.createElement('p');
+        game_over_p.setAttribute('id', 'game_over');
+        document.getElementById('game_frame').appendChild(game_over_p);
+    }
+    createElements();
+    function hide_game_play_elements() {
+        let content = ['game_background', 'level', 'score', 'score_value',
+            'wall_hp', 'wall1', 'wall2',
+            'wall3'];
+        for (let i = 0; i < content.length; i++) {
+            display_none(content[i]);
+        }
+    }
+    function display_none(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+    function remove_element(id) {
+        document.getElementById(id).remove();
+    }
+    function gameOver(zombie) {
+        zombie.remove();
+        hide_game_play_elements();
+        let background = document.getElementById('game_background');
+        document.getElementById('explosion').src = "explosion.gif";
+        background.src = document.getElementById('explosion').src;
+
+            //game_elements.remove();
+        setTimeout(function(){
+                //setTimeout(function(){
+            document.getElementById('game_over').innerHTML = "GAME OVER";
+               // }, 1);
+        }, 1000);
+        setTimeout(function() {
+            document.getElementById('explosion').style.display = 'none';
+                //resetGame();
+        }, 1000);
+        return;
+    }
+
+    function startGame() {
+        let wall_hp = 3;
+        let wall_hp_display = document.getElementById('wall_hp');
+        wall_hp_display.innerHTML = "Wall HP: " + wall_hp;
+        let wall1 = document.getElementById('wall1');
+        let wall2 = document.getElementById('wall2');
+        let wall3 = document.getElementById('wall3');
+        wall1.src = 'wall.png';
+        wall2.src = 'wall.png';
+        wall3.src = 'wall.png';
+        let level = 2;
+        wall_hp = spawnLevel(level, wall_hp);
+    }
+
+
+        function spawnLevel(level, wall_hp) {
+            setInterval(function() {
+                let zombie_array = ["zombie"];//, "zombie3", "flying_zombie1", "flying_zombie2", "flying_zombie3"];
+            let zombie_numbers = level;
+            let i = 0;
+            //for (let i = 0; i < zombie_numbers; i++) {
+            spawnDelay(i);
+            let exit_not_clicked = true;
+            document.getElementById('exit_button').onclick = function () {
+                //zombie.remove();
+                let content = ['game_background', 'level', 'score', 'score_value',
+                    'wall_hp', 'wall1', 'wall2', 'wall3', 'game_over', 'exit_button', 'explosion'];
+                for (let i = 0; i < content.length; i++) {
+                    remove_element(content[i]);
+                }
+                createElements();
+                exit_not_clicked = false;
+            };
+
+            function spawnDelay(i) {
+                setTimeout(function () {
+                    let zombie = document.createElement('img');
+                    zombie.className = "zombie";
+                    zombie.setAttribute('src', 'Zombieidle.gif');
+                    zombie.setAttribute('id', zombie_array[i]);
+                    document.getElementById('game_play').appendChild(zombie);
+                    let pos = 0;
+                    let attack_sound = new Audio('attack_sound.mp3');
+                    let intervalID = setInterval(function () {
+                            zombie.onclick = function () {
+                                zombie.src = "Zombiedead.gif";
+                                let zombie_dying_sound = new Audio('zombie_die_sound.wav');
+                                let gun_sound = new Audio('gun_sound.wav');
+                                gun_sound.play();
+                                zombie_dying_sound.play();
+                                let score = document.getElementById('score_value').innerHTML;
+                                score = parseInt(score);
+                                score++;
+                                document.getElementById('score_value').innerHTML = score;
+                                setTimeout(function () {
+                                    zombie.style.display = 'none';
+                                }, 350);
+                            };
+                            if (exit_not_clicked === false) {
+                                clearInterval(intervalID);
+                            } else {
+                                if (zombie.style.right === 670 + "px") {
+                                    clearInterval(intervalID);
+                                    zombie.src = 'Zombieattack.gif';
+                                    if (zombie.style.display !== 'none') {
+                                        attack_sound.play();
+                                        wall_hp -= 1;
+                                        document.getElementById('wall_hp').innerHTML = "Wall HP: " + wall_hp;
+                                        let intervalID2 = setInterval(function () {
+                                            if (zombie.style.display === 'none') {
+                                                clearInterval(intervalID2);
+                                                zombie.remove();
+                                            } else {
+                                                attack_sound.play();
+                                                wall_hp -= 1;
+                                                document.getElementById('wall_hp').innerHTML = "Wall HP: " + wall_hp;
+                                            }
+                                            if (wall_hp <= 0) {
+                                                //clearInterval(intervalID);
+                                                zombie.remove();
+                                                i = zombie_numbers + 1;
+                                                clearInterval(intervalID2);
+                                                gameOver(zombie);
+                                            }
+                                            //clearInterval(intervalID2);
+                                        }, 2000);
+                                    }
+                                } else {
+                                    pos++;
+                                    //flying_zombie.style.right = pos + "px";
+                                    zombie.style.right = pos + "px";
+                                }
+                            }
+                        }
+                        , 1);
+                    zombie.style.position = 'absolute';
+                    i++;
+                    if (i < zombie_numbers) {
+                        spawnDelay(i);
+                    }
+                }, 500);
+            }
+        }, 1500);
+    }
+</script>
+</body>
+</html>
